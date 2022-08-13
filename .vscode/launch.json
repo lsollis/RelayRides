@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RelayRidesApplication<RelayRides>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.RelayRides.mvc.RelayRidesApplication",
+            "projectName": "RelayRides",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
