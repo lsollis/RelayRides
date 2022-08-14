@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
@@ -44,11 +46,22 @@ public class User {
 	private Date created_at;
 	private Date updated_at;
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Listing> listings;
 	
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	private List<Booking> bookings;
+	
+	public User() {}
+	
+    @PrePersist
+    protected void onCreate(){
+        this.created_at = new Date();
+    }
+    @PreUpdate
+    protected void onUpdate(){
+        this.updated_at = new Date();
+    }
 
 	public Long getId() {
 		return id;

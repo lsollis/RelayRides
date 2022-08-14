@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -24,7 +26,7 @@ public class Listing {
 	@Size(min = 5, max = 20, message = "Make/Model must be between 5-20 characters long!")
 	private String model;
 	
-	@NotEmpty(message = "Locationl is required!")
+	@NotEmpty(message = "Location is required!")
 	@Size(min = 5, max = 30, message = "Location must be between 5-30 characters long!")
 	private String location;
 	
@@ -43,9 +45,20 @@ public class Listing {
 	private Date created_at;
 	private Date updated_at;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
+	
+	public Listing() {}
+	
+    @PrePersist
+    protected void onCreate(){
+        this.created_at = new Date();
+    }
+    @PreUpdate
+    protected void onUpdate(){
+        this.updated_at = new Date();
+    }
 
 	public Long getId() {
 		return id;
